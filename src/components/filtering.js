@@ -3,10 +3,10 @@ export function initFiltering(elements) {
     Object.keys(indexes).forEach((elementName) => {
       elements[elementName].append(
         ...Object.values(indexes[elementName]).map((name) => {
-          const el = document.createElement("option");
-          el.textContent = name;
-          el.value = name;
-          return el;
+          const option = document.createElement("option");
+          option.value = name;
+          option.textContent = name;
+          return option;
         })
       );
     });
@@ -14,14 +14,11 @@ export function initFiltering(elements) {
 
   const applyFiltering = (query, state, action) => {
     // код с обработкой очистки поля
-    if (action && action.type === "click" && action.target.name === "clear") {
-      const button = action.target;
-      const input = button.parentNode.querySelector("input"); // Находим input рядом с кнопкой
-      if (input) {
-        const field = button.dataset.field; // Получаем имя поля из data-field атрибута кнопки
-        input.value = ""; // Очищаем поле ввода в DOM
-        state[field] = ""; // Очищаем соответствующее поле в state
-      }
+    if (action && action.name === "clear") {
+      const parent = action.closest(".filter-group");
+      const input = action.closest(".filter-wrapper").querySelector("input");
+      input.value = "";
+      state[action.dataset.field] = "";
     }
 
     // @todo: #4.5 — отфильтровать данные, используя компаратор
