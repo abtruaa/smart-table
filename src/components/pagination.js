@@ -32,13 +32,13 @@ export const initPagination = (
 
     return Object.assign({}, query, {
       limit,
-      page
+      page,
     });
   };
 
   const updatePagination = (total, { page, limit }) => {
     pageCount = Math.ceil(total / limit);
-    
+
     const visiblePages = getPages(page, pageCount, 5);
     pages.replaceChildren(
       ...visiblePages.map((pageNumber) => {
@@ -54,6 +54,6 @@ export const initPagination = (
 
   return {
     updatePagination,
-    applyPagination
+    applyPagination,
   };
 };
